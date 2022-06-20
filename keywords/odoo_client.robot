@@ -1,6 +1,5 @@
 *** Settings ***
 Documentation                Interface to odoo-rpclib
-Resource                     ../keywords/odoo_client.robot
 Library                      ../library/odoo.py
 Library                      Collections
 
