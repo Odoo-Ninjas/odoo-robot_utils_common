@@ -196,3 +196,15 @@ class odoo(object):
         db = self.get_conn(host, dbname, user, pwd)
         obj = db['robot.data.loader']
         return obj.execute_sql(sql)
+
+    def sync_passwords(self, host, dbname, user, pwd):
+        """
+        puts all passwords as user id 1
+        """
+        db = self.get_conn(host, dbname, user, pwd)
+        obj = db['robot.data.loader']
+        obj.execute_sql((
+            "update res_users "
+            "set password = "
+            "(select password from res_users where id = 1)"
+        ))
