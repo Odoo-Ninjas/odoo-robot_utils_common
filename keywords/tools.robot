@@ -37,3 +37,12 @@ Odoo Sql            [Arguments]
 Output Source  [Arguments]
     ${myHtml} =    Get Source
     Log To Console  ${myHtml}
+
+Odoo Make Same Passwords       [Arguments]
+                    ...        ${dbname}=${ODOO_DB}
+                    ...        ${host}=${ODOO_URL}
+                    ...        ${user}=${ODOO_USER}
+                    ...        ${pwd}=${ODOO_PASSWORD}
+                    ...        ${context}=${None}
+    ${result}=  tools.Make Same Passwords    ${host}  ${dbname}  ${user}  ${pwd}
+    [return]                  ${result}
