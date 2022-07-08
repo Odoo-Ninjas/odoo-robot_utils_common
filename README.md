@@ -36,3 +36,29 @@ Search for the admin
 
 
 ```
+
+## Impersonate User at Test
+
+Provide an xml file:
+```xml
+<odoo>
+	<data noupdate='0'>
+
+		<record model="res.users" id="purchase1">
+			<field name="name">Purchaser</field>
+			<field name="login">purchase1</field>
+		</record>
+
+	</data>
+</odoo>
+
+```
+
+```robotframework
+
+*** Test Cases ***
+BaseTest
+    Odoo Load Data       ../data/basic_data/users.xml  robobase
+    Odoo Make Same Passwords
+    Login                user=purchase1
+```
