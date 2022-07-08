@@ -41,16 +41,13 @@ Search for the admin
 
 Provide an xml file:
 ```xml
-<odoo>
-	<data noupdate='0'>
-
-		<record model="res.users" id="purchase1">
-			<field name="name">Purchaser</field>
-			<field name="login">purchase1</field>
-		</record>
-
-	</data>
-</odoo>
+<record model="res.users" id="purchase1">
+    <field name="name">Purchaser</field>
+    <field name="login">purchase1</field>
+    <field name="groups_id" eval="[[6, 0, [
+        ref('purchase.group_purchase_user').id,
+    ]]"/>
+</record>
 
 ```
 
