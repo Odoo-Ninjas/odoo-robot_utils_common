@@ -218,3 +218,12 @@ Odoo Exec Sql       [Arguments]
                     ...        ${pwd}=${ODOO_PASSWORD}
     ${result}=  odoo.Exec Sql    ${host}  ${dbname}  ${user}  ${pwd}  ${sql}
     [return]                  ${result}
+
+Odoo Make Same Passwords       [Arguments]
+                    ...        ${dbname}=${ODOO_DB}
+                    ...        ${host}=${ODOO_URL}
+                    ...        ${user}=${ODOO_USER}
+                    ...        ${pwd}=${ODOO_PASSWORD}
+                    ...        ${context}=${None}
+    ${result}=  tools.Make Same Passwords    ${host}  ${dbname}  ${user}  ${pwd}
+    [return]                  ${result}

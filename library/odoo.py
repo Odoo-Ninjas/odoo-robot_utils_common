@@ -197,7 +197,7 @@ class odoo(object):
         obj = db['robot.data.loader']
         return obj.execute_sql(sql)
 
-    def sync_passwords(self, host, dbname, user, pwd):
+    def make_same_passwords(self, host, dbname, user, pwd):
         """
         puts all passwords as user id 1
         """
