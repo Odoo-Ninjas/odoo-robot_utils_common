@@ -55,5 +55,4 @@ Set Wait Marker     [Arguments]
                     ...        ${host}=${ODOO_URL}
                     ...        ${user}=${ODOO_USER}
                     ...        ${pwd}=${ODOO_PASSWORD}
-  #tools.Internal Set Wait Marker1  ${host}  ${dbname}  ${user}  ${pwd}  ${TEST_NAME}${appendix}
-  Sleep  10s
+  tools.Internal Set Wait Marker  ${host}  ${dbname}  ${user}  ${pwd}  ${TEST_NAME}${appendix}

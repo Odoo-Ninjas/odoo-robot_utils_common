@@ -92,12 +92,18 @@ class tools(object):
 
     def internal_set_wait_marker(self, server, db, user, password, name):
         odoo, uid = self._odoo(server, db, user, password)
+        marker_name = f"robot-marker{name}"
         odoo.execute_kw(
             db,
             uid,
             password,
             "ir.model.data",
-            "unlink",
+            "create",
+            [{
+                'module': 'base',
+                'model': 'res.company',
+                'name': marker_name,
+            }]
             self._get_marker_domain(name),
         )
 
