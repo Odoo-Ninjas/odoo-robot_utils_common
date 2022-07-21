@@ -59,3 +59,16 @@ BaseTest
     Odoo Make Same Passwords
     Login                user=purchase1
 ```
+
+
+## Parallel executed test, wait till preparation is done
+
+```robotframework
+Log To Console  Checking ${TEST_RUN_INDEX}
+IF  "${TEST_RUN_INDEX}" == "0"
+    Log To Console  Now preparing the stuff
+    Set Wait Marker  products_on_stock
+END
+
+Wait For Marker  products_on_stock
+```

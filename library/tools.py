@@ -88,12 +88,11 @@ class tools(object):
             ["module", "=", "base"],
             ["name", "=", marker_name],
         ]
-        return marker_name
+        return domain
 
-    def set_wait_marker(self, server, db, user, password, name):
+    def internal_set_wait_marker(self, server, db, user, password, name):
         odoo, uid = self._odoo(server, db, user, password)
-        marker_name = self._get_marker_name(name)
-        search_count = odoo.execute_kw(
+        odoo.execute_kw(
             db,
             uid,
             password,
@@ -102,13 +101,21 @@ class tools(object):
             self._get_marker_domain(name),
         )
 
-    def wait_for_marker(self, server, db, user, password, name):
+    def internal_wait_for_marker(self, server, db, user, password, name, timeout=120):
         odoo, uid = self._odoo(server, db, user, password)
-        return bool(odoo.execute_kw(
-            db,
-            uid,
-            password,
-            "ir.model.data",
-            "search_count",
-            self._get_marker_domain(name)
-        ))
+        deadline = arrow.get().shift(seconds=timeout)
+        while arrow.get() < deadline:
+            if odoo.execute_kw(
+                db,
+                uid,
+                password,
+                "ir.model.data",
+                "search_count",
+                [
+                    self._get_marker_domain(name),
+                ]
+            ):
+                break
+            time.sleep(1)
+        else:
+            raise Exception("Timeout")
