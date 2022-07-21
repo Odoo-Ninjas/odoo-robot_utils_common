@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation                Some Tools
 Library                      ../library/odoo.py
+Library                      ../library/tools.py
 Library                      Collections
 
 
@@ -42,11 +43,12 @@ Output Source  [Arguments]
 # For Stresstests suitable
 Wait For Marker     [Arguments]  
                     ...        ${appendix}
+                    ...        ${timeout}=120
                     ...        ${dbname}=${ODOO_DB}
                     ...        ${host}=${ODOO_URL}
                     ...        ${user}=${ODOO_USER}
                     ...        ${pwd}=${ODOO_PASSWORD}
-  tools.Internal Wait For Marker  ${host}  ${dbname}  ${user}  ${pwd}  ${TEST_NAME}${appendix}
+  tools.Internal Wait For Marker  ${host}  ${dbname}  ${user}  ${pwd}  ${TEST_NAME}${appendix}  ${timeout}
 
 
 Set Wait Marker     [Arguments]  

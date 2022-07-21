@@ -99,12 +99,13 @@ class tools(object):
             password,
             "ir.model.data",
             "create",
-            [{
-                'module': 'base',
-                'model': 'res.company',
-                'name': marker_name,
-            }]
-            self._get_marker_domain(name),
+            [
+                {
+                    "module": "base",
+                    "model": "res.company",
+                    "name": marker_name,
+                },
+            ],
         )
 
     def internal_wait_for_marker(self, server, db, user, password, name, timeout=120):
@@ -119,7 +120,7 @@ class tools(object):
                 "search_count",
                 [
                     self._get_marker_domain(name),
-                ]
+                ],
             ):
                 break
             time.sleep(1)

@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation                Interface to odoo-rpclib
 Library                      ../library/odoo.py
+Library                      ../library/tools.py
 Library                      Collections
 
 
