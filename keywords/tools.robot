@@ -37,3 +37,22 @@ Odoo Sql            [Arguments]
 Output Source  [Arguments]
     ${myHtml} =    Get Source
     Log To Console  ${myHtml}
+
+
+# For Stresstests suitable
+Wait For Marker  [Arguments]  
+                    ...        ${appendix}
+                    ...        ${dbname}=${ODOO_DB}
+                    ...        ${host}=${ODOO_URL}
+                    ...        ${user}=${ODOO_USER}
+                    ...        ${pwd}=${ODOO_PASSWORD}
+  tools.Wait For Marker  ${host}  ${dbname}  ${user}  ${pwd}  ${TEST_NAME}${appendix}
+
+
+Set Wait Marker  [Arguments]  
+                    ...        ${appendix}
+                    ...        ${dbname}=${ODOO_DB}
+                    ...        ${host}=${ODOO_URL}
+                    ...        ${user}=${ODOO_USER}
+                    ...        ${pwd}=${ODOO_PASSWORD}
+  tools.Set Wait Marker  ${host}  ${dbname}  ${user}  ${pwd}  ${TEST_NAME}${appendix}

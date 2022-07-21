@@ -80,3 +80,35 @@ class tools(object):
         return self.get_res_id(
             server, db, user, password, model=model, module=module, name=name
         )
+
+    def _get_marker_domain(self, name):
+        marker_name = f"robot-marker{name}"
+        domain = [
+            ["model", "=", "res.company"],
+            ["module", "=", "base"],
+            ["name", "=", marker_name],
+        ]
+        return marker_name
+
+    def set_wait_marker(self, server, db, user, password, name):
+        odoo, uid = self._odoo(server, db, user, password)
+        marker_name = self._get_marker_name(name)
+        search_count = odoo.execute_kw(
+            db,
+            uid,
+            password,
+            "ir.model.data",
+            "unlink",
+            self._get_marker_domain(name),
+        )
+
+    def wait_for_marker(self, server, db, user, password, name):
+        odoo, uid = self._odoo(server, db, user, password)
+        return bool(odoo.execute_kw(
+            db,
+            uid,
+            password,
+            "ir.model.data",
+            "search_count",
+            self._get_marker_domain(name)
+        ))
