@@ -94,7 +94,7 @@ class tools(object):
             "search",
             [
                 [['key', '=', marker_name]]
-            ]
+            ],
             count=True
             )
         if not exists:
