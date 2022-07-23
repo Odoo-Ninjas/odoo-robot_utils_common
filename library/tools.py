@@ -84,18 +84,16 @@ class tools(object):
     def internal_set_wait_marker(self, server, db, user, password, name):
         odoo, uid = self._odoo(server, db, "admin", password)
         marker_name = f"robot-marker{name}"
-        v = self.env['ir.config_parameter'].get_param(key="", default=False)
         
         exists = odoo.execute_kw(
             db,
             uid,
             password,
             "ir.config_parameter",
-            "search",
+            "search_count",
             [
                 [['key', '=', marker_name]]
             ],
-            count=True
             )
         if not exists:
             odoo.execute_kw(
