@@ -81,46 +81,51 @@ class tools(object):
             server, db, user, password, model=model, module=module, name=name
         )
 
-    def _get_marker_domain(self, name):
-        marker_name = f"robot-marker{name}"
-        domain = [
-            ["model", "=", "res.company"],
-            ["module", "=", "base"],
-            ["name", "=", marker_name],
-        ]
-        return domain
-
     def internal_set_wait_marker(self, server, db, user, password, name):
-        odoo, uid = self._odoo(server, db, user, password)
+        odoo, uid = self._odoo(server, db, "admin", password)
         marker_name = f"robot-marker{name}"
-        odoo.execute_kw(
+        v = self.env['ir.config_parameter'].get_param(key="", default=False)
+        
+        exists = odoo.execute_kw(
             db,
             uid,
             password,
-            "ir.model.data",
-            "create",
+            "ir.config_parameter",
+            "search",
             [
-                {
-                    "module": "base",
-                    "model": "res.company",
-                    "name": marker_name,
-                },
-            ],
-        )
+                [['key', '=', marker_name]]
+            ]
+            count=True
+            )
+        if not exists:
+            odoo.execute_kw(
+                db,
+                uid,
+                password,
+                "ir.config_parameter",
+                "create",
+                [
+                    {
+                        "key": marker_name,
+                        "value": "1",
+                    },
+                ],
+            )
 
     def internal_wait_for_marker(self, server, db, user, password, name, timeout=120):
         odoo, uid = self._odoo(server, db, user, password)
         deadline = arrow.get().shift(seconds=timeout)
+        marker_name = f"robot-marker{name}"
         while arrow.get() < deadline:
             if odoo.execute_kw(
                 db,
                 uid,
                 password,
-                "ir.model.data",
-                "search_count",
+                "ir.config_parameter",
+                "search",
                 [
-                    self._get_marker_domain(name),
-                ],
+                    [['key', '=', marker_name]]
+                ]
             ):
                 break
             time.sleep(1)
