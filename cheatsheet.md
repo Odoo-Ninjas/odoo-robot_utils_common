@@ -24,3 +24,11 @@ ${values}=      Create Dictionary
                 ...   ssh_key=${ROBOTTEST_SSH_KEY}
                 ...   postgres_server_id=${postgres}
 ```
+
+# x-nary
+```robotframework
+${decimalval} =   Set variable If
+...               '${decimalval}'=='0'       //md-option[@value='0dp']
+...               '${decimalval}'=='1'       //md-option[@value='1dp']
+...               '${decimalval}'=='2'       //md-option[@value='2dp']
+```
