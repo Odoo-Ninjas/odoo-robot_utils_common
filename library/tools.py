@@ -8,6 +8,14 @@ import time
 import uuid
 import xmlrpc.client
 from robot.api.deco import keyword
+from robot.utils.dotdict import DotDict
+
+
+class Encoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, DotDict):
+            return dict(obj)
+        return super().default(obj)
 
 
 class tools(object):
@@ -84,17 +92,15 @@ class tools(object):
     def internal_set_wait_marker(self, server, db, user, password, name):
         odoo, uid = self._odoo(server, db, "admin", password)
         marker_name = f"robot-marker{name}"
-        
+
         exists = odoo.execute_kw(
             db,
             uid,
             password,
             "ir.config_parameter",
             "search_count",
-            [
-                [['key', '=', marker_name]]
-            ],
-            )
+            [[["key", "=", marker_name]]],
+        )
         if not exists:
             odoo.execute_kw(
                 db,
@@ -121,9 +127,7 @@ class tools(object):
                 password,
                 "ir.config_parameter",
                 "search",
-                [
-                    [['key', '=', marker_name]]
-                ]
+                [[["key", "=", marker_name]]],
             ):
                 break
             time.sleep(1)
@@ -131,4 +135,5 @@ class tools(object):
             raise Exception("Timeout")
 
     def odoo_convert_to_dictionary(self, value):
-        return dict(value or {})
+        value = value or {}
+        return json.loads(json.dumps(value, cls=Encoder))
