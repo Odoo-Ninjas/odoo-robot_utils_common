@@ -112,7 +112,7 @@ Odoo Write  [Arguments]
             ...              ${pwd}=${ODOO_PASSWORD}
             ...              ${lang}=en_US
             ...              ${context}=${None}
-    ${values}=               Convert To Dictionary    ${values}
+    ${values}=               Odoo Convert To Dictionary    ${values}
     Log to Console           Write ${ids} ${model} with dict: ${values}
     ${result}=               odoo.Rpc Client Write    host=${host}  dbname=${dbname}  user=${user}  pwd=${pwd}  model=${model}  ids=${ids}  values=${values}  lang=${lang}  context=${context}
     [return]                 ${result}
