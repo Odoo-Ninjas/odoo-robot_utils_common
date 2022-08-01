@@ -129,3 +129,6 @@ class tools(object):
             time.sleep(1)
         else:
             raise Exception("Timeout")
+
+    def odoo_convert_to_dictionary(self, value):
+        return dict(value or {})
