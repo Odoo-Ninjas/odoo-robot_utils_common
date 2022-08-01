@@ -77,7 +77,7 @@ Odoo Load Data  [Arguments]
                 ...           ${host}=${ODOO_URL}
                 ...           ${user}=${ODOO_USER}
                 ...           ${pwd}=${ODOO_PASSWORD}
-    odoo.Load File            ${host}  ${dbname}  ${user}  ${pwd}  ${filepath}  ${module_name}  ${TEST NAME}
+    odoo.Load File            ${host}  ${dbname}  ${user}  ${pwd}  ${filepath}  ${module_name}
 
 Odoo Put File           [Arguments]
                         ...      ${file_path}

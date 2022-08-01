@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from copy import deepcopy
 from robot.api import logger
+from robot.libraries.BuiltIn import BuiltIn
 
 DEFAULT_LANG = 'en_US'
 
@@ -172,7 +173,7 @@ class odoo(object):
         obj = db['robot.data.loader']
         return obj.put_file(content, dest_path_on_odoo_container)
 
-    def load_file(self, host, dbname, user, pwd, filepath, module_name, test_name):
+    def load_file(self, host, dbname, user, pwd, filepath, module_name):
         filepath = Path(filepath).absolute()
         logger.debug(f"FilePath: {filepath}, cwd: {os.getcwd()}")
         db = self.get_conn(host, dbname, user, pwd)
@@ -182,6 +183,7 @@ class odoo(object):
         suffix = filepath.suffix
 
         # replace some environment variables:
+        test_name = BuiltIn().get_variable_value("${TEST NAME}")
         test_name = self.technical_testname(test_name)
         content = content.replace("${CURRENT_TEST}", test_name)
 
