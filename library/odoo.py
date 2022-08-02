@@ -49,9 +49,9 @@ def convert_args(method):
 class odoo(object):
 
     def technical_testname(self):
-        test_name = BuiltIn().get_variable_value("${TEST NAME}")
-        if not test_name:
-            test_name = BuiltIn().get_variable_value("${SUITE NAME}")
+        testname = BuiltIn().get_variable_value("${TEST NAME}")
+        if not testname:
+            testname = BuiltIn().get_variable_value("${SUITE NAME}")
         testname = testname.lower().replace(" ", "_")
         return testname
 
