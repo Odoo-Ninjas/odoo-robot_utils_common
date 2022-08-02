@@ -72,7 +72,7 @@ Odoo Search Read Records  [Arguments]
 
 Odoo Load Data  [Arguments]
                 ...           ${filepath}
-                ...          ${module_name}
+                ...           ${module_name}=robobase
                 ...           ${dbname}=${ODOO_DB}
                 ...           ${host}=${ODOO_URL}
                 ...           ${user}=${ODOO_USER}

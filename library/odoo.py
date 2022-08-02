@@ -184,6 +184,8 @@ class odoo(object):
 
         # replace some environment variables:
         test_name = BuiltIn().get_variable_value("${TEST NAME}")
+        if not test_name:
+            test_name = BuiltIn().get_variable_value("${SUITE NAME}")
         test_name = self.technical_testname(test_name)
         content = content.replace("${CURRENT_TEST}", test_name)
 
