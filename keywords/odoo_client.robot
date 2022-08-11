@@ -228,3 +228,6 @@ Odoo Make Same Passwords       [Arguments]
                     ...        ${context}=${None}
     ${result}=  tools.Make Same Passwords    ${host}  ${dbname}  ${user}  ${pwd}
     [return]                  ${result}
+
+Wait Queuejobs Done
+    Odoo Execute    robot.data.loader    method=wait_queuejobs
