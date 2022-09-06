@@ -12,18 +12,19 @@ from robot.api.deco import keyword
 from robot.utils.dotdict import DotDict
 from robot.libraries.BuiltIn import BuiltIn
 
+
 class wodoo(object):
     def command(self, shellcmd):
         cwd = Path(os.getenv("ODOO_HOME"))
         assert cwd.exists()
-        cmd = "odoo -p $PROJECT_NAME " + " " + shellcmd
+        cmd = 'odoo -p "$project_name" ' + shellcmd
         return self._cmd(cmd, cwd=cwd, output=True)
 
     def _cmd(self, cmd, output=False, cwd=None):
         if cwd:
-            stringcommand = f"cd '{cwd}' || exit -1;" f"{cmd}"
+            cmd = f"cd '{cwd}' || exit -1;" f"{cmd}"
         if not output:
-            res = check_call(cmd)
+            res = check_call(cmd, shell=True)
         else:
-            res = check_output(cmd, encoding="utf8")
+            res = check_output(cmd, encoding="utf8", shell=True)
             return res
