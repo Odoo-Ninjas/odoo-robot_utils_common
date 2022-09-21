@@ -1,10 +1,12 @@
 import sys
+import json
 import base64
 import os
 from pathlib import Path
 from copy import deepcopy
 from robot.api import logger
 from robot.libraries.BuiltIn import BuiltIn
+from robot.utils.dotdict import DotDict
 
 DEFAULT_LANG = 'en_US'
 
@@ -14,7 +16,14 @@ DEFAULT_LANG = 'en_US'
 #         return result
 
 #     return params
-
+class Encoder(json.JSONEncoder):
+    """
+    Make values compatible.
+    """
+    def default(self, obj):
+        if isinstance(obj, DotDict):
+            return json.JSONEncoder.default(self, dict(obj))
+        return json.JSONEncoder.default(self, obj)
 
 
 def convert_args(method):
@@ -122,6 +131,7 @@ class odoo(object):
         context = self._get_context(context, lang)
         db = self.get_conn(host, dbname, user, pwd)
         obj = db[model]
+        values = self._parse_values(values)
         return obj.write(ids, values, context=context)
 
     @convert_args
@@ -143,6 +153,7 @@ class odoo(object):
         context = self._get_context(context, lang)
         db = self.get_conn(host, dbname, user, pwd)
         obj = db[model]
+        values = self._parse_values(values)
         res = obj.create(values)
         return res
 
@@ -200,3 +211,7 @@ class odoo(object):
         db = self.get_conn(host, dbname, user, pwd)
         obj = db['robot.data.loader']
         return obj.execute_sql(sql)
+
+    def _parse_values(self, values):
+        values = json.loads(json.dumps(values, cls=Encoder))
+        return values
