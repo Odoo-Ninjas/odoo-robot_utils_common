@@ -79,3 +79,15 @@ Roundcube Create Identity  [Arguments]      ${name}      ${email}
     Input Text        xpath=//td/input[@id="rcmfd_email"]   ${email}
     Capture Page Screenshot
     Wait To Click     xpath=//div/button[@class="btn btn-primary submit"]
+
+Roundcube Delete All Mails
+    Go to             ${ODOO_URL}/mailer
+    Log to Console    Deleting all emails
+    Wait To Click     xpath=(//span[text()='Mail'])[1]
+    Wait To Click     xpath=//a[@title='Folder actions...' and @class='button icon sidebar-menu active' and @data-popup='mailboxoptions-menu' and @id='rcmbtn107' and @role='button' and @href='#' and @aria-haspopup='true' and @aria-expanded='false' and @aria-owns='mailboxoptions-menu' and @data-original-title='Folder actions...']
+    Capture Page Screenshot
+    Wait To Click     xpath=//a[text()='Empty']
+    Capture Page Screenshot
+    Wait To Click     xpath=//button[@type='button' and @class='mainaction delete btn btn-primary btn-danger' and text()='Delete']
+    Capture Page Screenshot
+    Log to Console    All emails deleted.
