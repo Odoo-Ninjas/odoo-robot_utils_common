@@ -30,6 +30,7 @@ Smoketest
 *** Keywords ***
 Setup Smoketest
     Login
+    Click Element                    xpath=//a[@class[contains(., 'full')]]
 
 Search for the admin
     Odoo Search                     model=res.users  domain=[]  count=False
