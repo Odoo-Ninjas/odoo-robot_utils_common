@@ -65,3 +65,14 @@ Set Wait Marker
     ...                               ${user}=${ODOO_USER}
     ...                               ${pwd}=${ODOO_PASSWORD}
     tools.Internal Set Wait Marker    ${host}                    ${dbname}    ${user}    ${pwd}    ${TEST_NAME}${appendix}
+
+Open New Browser    [Arguments]     ${url}
+    Set Selenium Speed	            1.0
+    Set Selenium Timeout	        ${SELENIUM_TIMEOUT}
+    Log To Console    ${url}
+    Log To Console    Using this browser engine: ${browser}
+    ${browser_id}=                  Get Driver For Browser    ${browser}  ${CURDIR}${/}..${/}tests/download
+    Set Window Size                 1920    1080
+    Go To                           ${url}
+    Capture Page Screenshot
+    [return]    ${browser_id}

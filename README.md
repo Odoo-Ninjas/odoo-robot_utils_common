@@ -14,7 +14,10 @@ Helps together with wodoo-framework and cicd to quickly spinup robo tests.
 
 *** Settings ***
 Documentation     Smoketest
-Resource          keywords/odoo_14_ee.robot  # insert YOUR appriorate version here
+Resource          keywords/odoo_ee.robot
+Resource        ../../robot_utils_common/keywords/tools.robot
+Resource        ../../robot_utils_common/keywords/odoo_client.robot
+Resource        ../../robot_utils_common/keywords/styling.robot
 Test Setup        Setup Smoketest
 
 
