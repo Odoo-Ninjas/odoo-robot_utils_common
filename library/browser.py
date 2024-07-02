@@ -1,4 +1,5 @@
 from selenium import webdriver
+from pathlib import Path
 from robot.libraries.BuiltIn import BuiltIn
 
 
@@ -6,6 +7,7 @@ BROWSER_NAMES = {
     'googlechrome': "chrome",
     'gc': "chrome",
     'chrome': "chrome",
+    'chromium': "chrome",
     'headlesschrome': 'chrome',
     'ff': 'firefox',
     'firefox': 'firefox',
@@ -101,13 +103,7 @@ def get_driver_for_browser(browser, path):
 
 
 def get_absolute_path(path):
-    absolute_path = []
-    for level in path.split('/'):
-        if level == '..':
-            absolute_path = absolute_path[:-1]
-        else:
-            absolute_path.append(level)
-    return '/'.join(absolute_path)
+    return str(Path(path).absolute())
 
 
 def get_selenium_browser_log():
