@@ -38,6 +38,9 @@ Search for the admin
     Should Be Equal As Strings      ${count}  1
     Log To Console  ${count}
 
+Misc
+    Log To Console                  This is my unique token ${TOKEN}
+    Log To Console                  This is the directory of the test: ${TEST_DIR}
 
 ```
 
@@ -76,3 +79,5 @@ END
 
 Wait For Marker  products_on_stock
 ```
+
+
