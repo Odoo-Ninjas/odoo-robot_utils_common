@@ -92,3 +92,11 @@ Get Instance ID From Url
     Should Be Equal As Strings  ${model}   ${assumed_model}
     Log To Console  Model: ${model}
     Log To Console  ID: ${id}
+
+Get All Variables
+    ${variables}=    List All Variables
+    [return]  ${variables}
+
+Log All Variables
+	${variables}=    Get All Variables
+	Log To Console  ${variables}
