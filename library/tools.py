@@ -9,6 +9,8 @@ import uuid
 import xmlrpc.client
 from robot.api.deco import keyword
 from robot.utils.dotdict import DotDict
+from robot.libraries.BuiltIn import BuiltIn
+
 
 
 class Encoder(json.JSONEncoder):
@@ -137,3 +139,8 @@ class tools(object):
     def odoo_convert_to_dictionary(self, value):
         value = value or {}
         return json.loads(json.dumps(value, cls=Encoder))
+
+    def list_all_variables(self):
+        context = BuiltIn().get_library_instance('BuiltIn')
+        variables = context.get_variables()
+        return variables
