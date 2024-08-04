@@ -10,6 +10,16 @@ Test Case 1
         | aliqua. Ut enim ad minim veniam, quis nostrud exercitation
         | ullamco laboris nisi ut aliquip ex ea commodo consequat.
 ```
+# Show all variables
+	${variables}=    Get All Variables
+	Log To Console  ${variables}
+
+
+# Multiline
+  ${var1}=    Catenate  
+  ... test1
+  ... test2
+  ... test3
 
 # Dictionaries
 
