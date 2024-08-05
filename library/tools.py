@@ -1,3 +1,4 @@
+import inspect
 from datetime import date
 import arrow
 from pathlib import Path
@@ -144,3 +145,8 @@ class tools(object):
         context = BuiltIn().get_library_instance('BuiltIn')
         variables = context.get_variables()
         return variables
+
+    def get_function_parameters(self, keyword):
+        fkeyword = BuiltIn().run_keyword(keyword) 
+        signature = inspect.signature(fkeyword)
+        return signature.parameters

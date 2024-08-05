@@ -42,6 +42,7 @@ Misc
     Log To Console                  This is my unique token ${TOKEN}
     Log To Console                  This is the directory of the test: ${TEST_DIR}
 
+
 ```
 
 ## Impersonate User at Test
@@ -79,5 +80,3 @@ END
 
 Wait For Marker  products_on_stock
 ```
-
-

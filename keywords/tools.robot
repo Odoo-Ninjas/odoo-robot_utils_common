@@ -92,6 +92,8 @@ Get Instance ID From Url
     Should Be Equal As Strings  ${model}   ${assumed_model}
     Log To Console  Model: ${model}
     Log To Console  ID: ${id}
+    ${id}=  evaluate  int("${id}")
+    [Return]  ${id}
 
 Get All Variables
     ${variables}=    List All Variables
@@ -100,3 +102,9 @@ Get All Variables
 Log All Variables
 	${variables}=    Get All Variables
 	Log To Console  ${variables}
+
+Log Keyword Parameters  
+    [Arguments]      ${keyword}
+    ${params}=       tools.Get Function Parameters  ${keyword}
+    Log Many         ${params}
+    Log To Console   ${params}
