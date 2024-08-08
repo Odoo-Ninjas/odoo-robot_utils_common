@@ -19,13 +19,13 @@ Get Now As String
     ...            ${dummy}=${FALSE}
     ${result}=     tools.Get Now
     ${result}=     Set Variable         ${result.strftime("%Y-%m-%d %H:%M:%S")}
-    [return]       ${result}
+    RETURN         ${result}
 
 Get Guid
     [Arguments]
     ...            ${dummy}=${FALSE}
     ${result}=     tools.Do Get Guid
-    [return]       ${result}
+    RETURN         ${result}
 
 Odoo Sql
     [Arguments]
@@ -36,7 +36,7 @@ Odoo Sql
     ...            ${pwd}=${ODOO_PASSWORD}
     ...            ${context}=${None}
     ${result}=     tools.Execute Sql          ${host}    ${dbname}    ${user}    ${pwd}    ${sql}    context=${context}
-    [return]       ${result}
+    RETURN         ${result}
 
 
 Output Source
@@ -75,13 +75,13 @@ Open New Browser    [Arguments]     ${url}
     Set Window Size                 1920    1080
     Go To                           ${url}
     Capture Page Screenshot
-    [return]    ${browser_id}
+    RETURN      ${browser_id}
 
 Eval Regex
     [Arguments]    ${regex}    ${text}
     ${matches}=    Evaluate    re.findall($regex, $text)
     ${result}=     Run Keyword If    "${matches}"!="[]"    Get From List    ${matches}   0
-    [Return]       ${result}
+    RETURN         ${result}
 
 Get Instance ID From Url
     [Arguments]  ${assumed_model}
@@ -93,11 +93,11 @@ Get Instance ID From Url
     Log To Console  Model: ${model}
     Log To Console  ID: ${id}
     ${id}=  evaluate  int("${id}")
-    [Return]  ${id}
+    RETURN    ${id}
 
 Get All Variables
     ${variables}=    List All Variables
-    [return]  ${variables}
+    RETURN    ${variables}
 
 Log All Variables
 	${variables}=    Get All Variables
@@ -108,3 +108,6 @@ Log Keyword Parameters
     ${params}=       tools.Get Function Parameters  ${keyword}
     Log Many         ${params}
     Log To Console   ${params}
+
+Assert  [Arguments]  ${expr}  ${msg}=Assertion failed
+    tools.My_Assert  ${expr}  ${msg}

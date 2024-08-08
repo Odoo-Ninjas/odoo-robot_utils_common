@@ -9,7 +9,7 @@ Library          Collections
 
 Technical Testname
     ${result}=    odoo.Technical Testname
-    [return]      ${result}
+    RETURN        ${result}
 
 
 Odoo Conn
@@ -19,7 +19,7 @@ Odoo Conn
     ...            ${user}=${ODOO_USER}
     ...            ${pwd}=${ODOO_PASSWORD}
     ${conn}=       odoo._get Conn             ${host}    ${dbname}    ${user}    ${pwd}
-    [return]       ${conn}
+    RETURN         ${conn}
 
 Odoo Search
     [Arguments]
@@ -35,7 +35,7 @@ Odoo Search
     ...            ${lang}=en_US
     ...            ${context}=${NONE}
     ${result}=     odoo.Rpc Client Search     ${host}    ${dbname}    ${user}    ${pwd}    ${model}    ${domain}    ${limit}    ${order}    ${count}    lang=${lang}    context=${context}
-    [return]       ${result}
+    RETURN         ${result}
 
 Odoo Search Records
     [Arguments]
@@ -50,10 +50,8 @@ Odoo Search Records
     ...               ${order}=${NONE}
     ...               ${lang}=en_US
     ...               ${context}=${None}
-    Log To Console    ${lang}
-    Log To Console    ${context}
     ${result}=        odoo.Rpc Client Search Records    ${host}    ${dbname}    ${user}    ${pwd}    ${model}    ${domain}    ${limit}    ${order}    ${count}    lang=${lang}    context=${context}
-    [return]          ${result}
+    RETURN            ${result}
 
 Odoo Search Read Records
     [Arguments]
@@ -69,10 +67,8 @@ Odoo Search Read Records
     ...               ${order}=${NONE}
     ...               ${lang}=en_US
     ...               ${context}=${None}
-    Log To Console    ${lang}
-    Log To Console    ${context}
     ${result}=        odoo.Rpc Client Search Read Records    ${host}    ${dbname}    ${user}    ${pwd}    ${model}    ${domain}    ${fields}    ${limit}    ${order}    ${count}    lang=${lang}    context=${context}
-    [return]          ${result}
+    RETURN            ${result}
 
 Odoo Load Data
     [Arguments]
@@ -107,7 +103,7 @@ Odoo Create
     ${new_dict}=      Convert To Dictionary                         ${values}
     Log to Console    Create new ${model} with dict: ${new_dict}
     ${result}=        odoo.Rpc Client Create                        ${host}      ${dbname}    ${user}    ${pwd}    model=${model}    values=${new_dict}    lang=${lang}    context=${context}
-    [return]          ${result}
+    RETURN            ${result}
 
 Odoo Write
     [Arguments]
@@ -123,7 +119,7 @@ Odoo Write
     ${values}=        Odoo Convert To Dictionary                    ${values}
     Log to Console    Write ${ids} ${model} with dict: ${values}
     ${result}=        odoo.Rpc Client Write                         host=${host}    dbname=${dbname}    user=${user}    pwd=${pwd}    model=${model}    ids=${ids}    values=${values}    lang=${lang}    context=${context}
-    [return]          ${result}
+    RETURN            ${result}
 
 Odoo Unlink
     [Arguments]
@@ -135,7 +131,7 @@ Odoo Unlink
     ...            ${pwd}=${ODOO_PASSWORD}
     ...            ${context}=${None}
     ${result}=     odoo.Rpc Client Execute    method=unlink    host=${host}    dbname=${dbname}    user=${user}    pwd=${pwd}    model=${model}    ids=${ids}    context=${context}
-    [return]       ${result}
+    RETURN         ${result}
 
 Odoo Search Unlink
     [Arguments]
@@ -155,9 +151,7 @@ Odoo Search Unlink
     ${result}=             odoo.Rpc Client Execute    method=unlink    host=${host}    dbname=${dbname}    user=${user}    pwd=${pwd}    model=${model}    ids=${ids}    lang=${lang}    context=${context}
     END
 
-    Log To Console    Nach Aufruf unlink: ${result}
-
-    [return]    ${True}
+    RETURN    ${True}
 
 Odoo Ref Id
     [Arguments]
@@ -168,7 +162,7 @@ Odoo Ref Id
     ...               ${pwd}=${ODOO_PASSWORD}
     Log to Console    XML ID: ${xml_id}
     ${result}=        odoo.Rpc Client Ref Id     ${host}    ${dbname}    ${user}    ${pwd}    ${xml_id}
-    [return]          ${result}
+    RETURN          ${result}
 
 Odoo Ref
     [Arguments]
@@ -179,7 +173,7 @@ Odoo Ref
     ...               ${pwd}=${ODOO_PASSWORD}
     Log to Console    XML ID: ${xml_id}
     ${result}=        odoo.Rpc Client Ref        ${host}    ${dbname}    ${user}    ${pwd}    ${xml_id}
-    [return]          ${result}
+    RETURN          ${result}
 
 Odoo Execute
     [Documentation]  To execute @api.model function dont pass ids
@@ -196,7 +190,7 @@ Odoo Execute
     ...            ${lang}=en_US
     ...            ${context}=${None}
     ${result}=     odoo.Rpc Client Execute    ${host}    ${dbname}    ${user}    ${pwd}    model=${model}    ids=${ids}    method=${method}    params=${params}    kwparams=${kwparams}    lang=${lang}    context=${context}
-    [return]       ${result}
+    RETURN         ${result}
 
 
 Odoo Read
@@ -211,7 +205,7 @@ Odoo Read
     ...            ${lang}=en_US
     ...            ${context}=${None}
     ${result}=     odoo.Rpc Client Read       ${host}    ${dbname}    ${user}    ${pwd}    model=${model}    ids=${ids}    fields=${fields}    lang=${lang}    context=${context}
-    [return]       ${result}
+    RETURN         ${result}
 
 Odoo Read Field
     [Arguments]
@@ -225,7 +219,7 @@ Odoo Read Field
     ...            ${lang}=en_US
     ...            ${context}=${None}
     ${result}=     odoo.Rpc Client Get Field    ${host}    ${dbname}    ${user}    ${pwd}    model=${model}    id=${id}    field=${field}    lang=${lang}    context=${context}
-    [return]       ${result}
+    RETURN         ${result}
 
 Odoo Exec Sql
     [Arguments]
@@ -235,7 +229,7 @@ Odoo Exec Sql
     ...            ${user}=${ODOO_USER}
     ...            ${pwd}=${ODOO_PASSWORD}
     ${result}=     odoo.Exec Sql              ${host}    ${dbname}    ${user}    ${pwd}    ${sql}
-    [return]       ${result}
+    RETURN         ${result}
 
 Odoo Make Same Passwords
     [Arguments]
@@ -245,7 +239,7 @@ Odoo Make Same Passwords
     ...            ${pwd}=${ODOO_PASSWORD}
     ...            ${context}=${None}
     ${result}=     tools.Make Same Passwords    ${host}    ${dbname}    ${user}    ${pwd}
-    [return]       ${result}
+    RETURN         ${result}
 
 Wait Queuejobs Done
     Odoo Execute    robot.data.loader    method=wait_queuejobs

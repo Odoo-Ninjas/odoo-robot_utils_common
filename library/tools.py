@@ -150,3 +150,8 @@ class tools(object):
         fkeyword = BuiltIn().run_keyword(keyword) 
         signature = inspect.signature(fkeyword)
         return signature.parameters
+
+    def My_Assert(self, expr, msg=""):
+        res = bool(eval(expr))
+        if not res:
+            raise Exception(msg)
