@@ -13,7 +13,6 @@ from robot.utils.dotdict import DotDict
 from robot.libraries.BuiltIn import BuiltIn
 
 
-
 class Encoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, DotDict):
@@ -142,12 +141,12 @@ class tools(object):
         return json.loads(json.dumps(value, cls=Encoder))
 
     def list_all_variables(self):
-        context = BuiltIn().get_library_instance('BuiltIn')
+        context = BuiltIn().get_library_instance("BuiltIn")
         variables = context.get_variables()
         return variables
 
     def get_function_parameters(self, keyword):
-        fkeyword = BuiltIn().run_keyword(keyword) 
+        fkeyword = BuiltIn().run_keyword(keyword)
         signature = inspect.signature(fkeyword)
         return signature.parameters
 

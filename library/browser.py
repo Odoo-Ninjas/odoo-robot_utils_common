@@ -4,37 +4,36 @@ from robot.libraries.BuiltIn import BuiltIn
 
 
 BROWSER_NAMES = {
-    'googlechrome': "chrome",
-    'gc': "chrome",
-    'chrome': "chrome",
-    'chromium': "chrome",
-    'headlesschrome': 'chrome',
-    'ff': 'firefox',
-    'firefox': 'firefox',
-    'headlessfirefox': 'firefox',
+    "googlechrome": "chrome",
+    "gc": "chrome",
+    "chrome": "chrome",
+    "chromium": "chrome",
+    "headlesschrome": "chrome",
+    "ff": "firefox",
+    "firefox": "firefox",
+    "headlessfirefox": "firefox",
 }
 
 
 class BrowserDriver(object):
-
     def __init__(self, browser, path):
         if browser in BROWSER_NAMES:
             driver = BROWSER_NAMES[browser]
             self.browser = browser
             self.path = path
-            self.headless = 'headless' in browser
+            self.headless = "headless" in browser
 
             self.driverClass = driver.capitalize()
-            self.optionsClass = '{}Options'.format(driver.capitalize())
-            self.optionsMethod = '_add_options_for_{}'.format(driver)
+            self.optionsClass = "{}Options".format(driver.capitalize())
+            self.optionsMethod = "_add_options_for_{}".format(driver)
         else:
-            raise ValueError('{} is not a supported browser.'.format(browser))
+            raise ValueError("{} is not a supported browser.".format(browser))
 
     def create_webdriver(self):
         options = self.create_options()
-        instance = BuiltIn().get_library_instance('SeleniumLibrary')
+        instance = BuiltIn().get_library_instance("SeleniumLibrary")
         driver = instance.create_webdriver(self.driverClass, options=options)
-        if self.headless and self.driverClass == 'Chrome':
+        if self.headless and self.driverClass == "Chrome":
             self._enable_download_in_headless_chrome(instance._drivers.current)
         return driver
 
@@ -48,11 +47,12 @@ class BrowserDriver(object):
         Requires chrome version 62.0.3196.0 or above.
         """
         driver.command_executor._commands["send_command"] = (
-            "POST", '/session/$sessionId/chromium/send_command'
+            "POST",
+            "/session/$sessionId/chromium/send_command",
         )
         params = {
-            'cmd': 'Page.setDownloadBehavior',
-            'params': {'behavior': 'allow', 'downloadPath': self.path}
+            "cmd": "Page.setDownloadBehavior",
+            "params": {"behavior": "allow", "downloadPath": self.path},
         }
         driver.execute("send_command", params)
 
@@ -67,33 +67,28 @@ class BrowserDriver(object):
         return getattr(self, self.optionsMethod)(options)
 
     def _add_options_for_chrome(self, options):
-        options.add_experimental_option("prefs", {
-            "download.default_directory": self.path,
-            "download.prompt_for_download": False,
-            "download.directory_upgrade": True,
-            "download.extensions_to_open": "",
-            "plugins.always_open_pdf_externally": True
-        })
+        options.add_experimental_option(
+            "prefs",
+            {
+                "download.default_directory": self.path,
+                "download.prompt_for_download": False,
+                "download.directory_upgrade": True,
+                "download.extensions_to_open": "",
+                "plugins.always_open_pdf_externally": True,
+            },
+        )
         if self.headless:
             pass
         return options
 
     def _add_options_for_firefox(self, options):
+        options.set_preference("browser.download.folderList", 2)
+        options.set_preference("browser.download.manager.showWhenStarting", False)
+        options.set_preference("browser.download.dir", self.path)
         options.set_preference(
-            "browser.download.folderList", 2
+            "browser.helperApps.neverAsk.saveToDisk", "application/pdf"
         )
-        options.set_preference(
-            "browser.download.manager.showWhenStarting", False
-        )
-        options.set_preference(
-            "browser.download.dir", self.path
-        )
-        options.set_preference(
-            "browser.helperApps.neverAsk.saveToDisk", 'application/pdf'
-        )
-        options.set_preference(
-            "pdfjs.disabled", True
-        )
+        options.set_preference("pdfjs.disabled", True)
         return options
 
 
@@ -107,5 +102,5 @@ def get_absolute_path(path):
 
 
 def get_selenium_browser_log():
-    instance = BuiltIn().get_library_instance('SeleniumLibrary')
-    return instance.driver.get_log('browser')
+    instance = BuiltIn().get_library_instance("SeleniumLibrary")
+    return instance.driver.get_log("browser")
