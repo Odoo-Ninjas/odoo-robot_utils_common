@@ -86,9 +86,10 @@ Eval Regex
 Get Instance ID From Url
     [Arguments]  ${assumed_model}
     ${url}=    Get Location
+    Log To Console  Location is ${url}
     Set Variable    ${url}
     ${model}=    Eval Regex    model=([^&]+)    ${url}
-    ${id}=    Eval Regex    id=([^&]+)    ${url}
+    ${id}=    Eval Regex    [\#\&]id=([^&]+)    ${url}
     Should Be Equal As Strings  ${model}   ${assumed_model}
     Log To Console  Model: ${model}
     Log To Console  ID: ${id}
