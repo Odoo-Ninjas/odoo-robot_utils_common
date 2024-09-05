@@ -10,13 +10,13 @@ from robot.utils.dotdict import DotDict
 
 DEFAULT_LANG = "en_US"
 
-# def params(func):
-#     def wrap(*args, **kwargs):
-#         result = func(*args, **kwargs)
-#         return result
+def _convert_fields(fields):
+    if isinstance(fields, str):
+        fields = fields.split(",")
+        fields = list(map(lambda x: x.strip(), fields))
+    return fields
 
 
-#     return params
 class Encoder(json.JSONEncoder):
     """
     Make values compatible.
@@ -29,10 +29,6 @@ class Encoder(json.JSONEncoder):
 
 
 def convert_args(method):
-    def _convert_fields(fields):
-        if isinstance(fields, str):
-            fields = fields.split(",")
-        return fields
 
     def _convert_ids(ids):
         if isinstance(ids, str):
@@ -155,6 +151,7 @@ class odoo(object):
         lang=DEFAULT_LANG,
         context=None,
     ):
+        fields = _convert_fields(fields)
         db = self.get_conn(host, dbname, user, pwd)
         context = self._get_context(context, lang)
         limit = int(limit) if limit else None
@@ -180,6 +177,7 @@ class odoo(object):
         lang=DEFAULT_LANG,
         context=None,
     ):
+        fields = _convert_fields(fields)
         context = self._get_context(context, lang)
         db = self.get_conn(host, dbname, user, pwd)
         obj = db[model]
